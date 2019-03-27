@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/coffeeActions";
 
 // NativeBase Components
 import { Text, Left, Body, Right, Button, ListItem, Icon } from "native-base";
@@ -18,7 +20,10 @@ class CartItem extends Component {
           <Text style={{ color: "white" }}>{item.quantity}</Text>
         </Body>
         <Right>
-          <Button transparent>
+          <Button
+            transparent
+            onPress={() => this.props.removeItemFromCart(item)}
+          >
             <Icon name="trash" style={{ color: "white", fontSize: 21 }} />
           </Button>
         </Right>
@@ -27,4 +32,11 @@ class CartItem extends Component {
   }
 }
 
-export default CartItem;
+const mapDispatchToProps = dispatch => ({
+  removeItemFromCart: item => dispatch(actionCreators.removeItemFromCart(item))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CartItem);
